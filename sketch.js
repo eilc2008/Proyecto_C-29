@@ -8,10 +8,11 @@ var holder,ball,ground;
 var stand1,stand2;
 var ball;
 var slingShot;
-var polygon_img;
-function preload(){
-  polygon_img=loadImage("polygon.png");
-}
+var polygon;
+
+//function preload(){
+  //polygon_img=loadImage("polygon.png");
+//}
 function setup() {
   createCanvas(900,400);
   engine = Engine.create();
@@ -43,9 +44,22 @@ function setup() {
   //parte superior
   block16 = new Block(390,155,30,40);
 
+  //nivel uno, soporte 2
+  block17 = new Block(640,175,30,40);
+  block18 = new Block(670,175,30,40);
+  block19 = new Block(700,175,30,40);
+  block20 = new Block(730,175,30,40);
+  block21 = new Block(760,175,30,40);
+  //nivel dos soporte 2
+  block22 = new Block(670,135,30,40);
+  block23 = new Block(700,135,30,40);
+  block24 = new Block(730,135,30,40);
+  //parte superior soporte 2
+  block25 = new Block(700,95,30,40);
 
-  
+  polygon = new Polygon(100,100,50,50);
 
+  slingShot = new SlingShot(polygon.body,{x:100,y:100})
 }
 function draw() {
   background(56,44,44); 
@@ -56,6 +70,10 @@ function draw() {
 
   ground.display();
   stand1.display();
+  stand2.display();
+
+  slingShot.display();
+  polygon.display();  
   
   strokeWeight(2);
   stroke(15);
@@ -80,5 +98,32 @@ function draw() {
   fill("grey");
   block16.display();
  
+  fill("skyblue");
+  block17.display();
+  block18.display();
+  block19.display();
+  block20.display();
+  block21.display();
+  fill("turquoise");
+  block22.display();
+  block23.display();
+  block24.display();
+  fill("grey");
+  block25.display();
+}
 
+function mouseDragged(){
+  Matter.Body.setPosition(polygon.body, {x: mouseX, y: mouseY});
+}
+
+function mouseReleased(){
+  slingShot.fly();
+}
+
+function keyPressed(){
+  if(keyCode === 32){
+      slingShot.attach(polygon.body);
+
+      Matter.Body.setPosition(polygon.body,{x:100,y:100});
+  }
 }
